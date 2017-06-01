@@ -1,0 +1,30 @@
+gama.io API
+
+Schema 1 PSQL:
+
+Table api_owners - Users who own any number of API Apps, linked to specific django user:
+cols: id, name, email, user_id
+	id - int, ai
+	name - char, name of the user
+	email - char, email address of the user
+	user_id - m2o SK users.id, user id of django user
+
+Table api_apps - The Application that will be using the API:
+cols: id, apikey, name, description, owner_id, callback_uri, website, settings
+	id - int, ai
+	apikey - char (256)
+	name - char, name of the application
+	description - char, short description
+	owner_id - m2o SK api_owners.id, owner of the application
+	callback_uri - char, optional, where to send results of polling in JSON format. If unset, the device has to check in with the API. If set, the API can check in with the device (via heartbeats) as well as the device checking in with the API
+	website - char, optional, website describing the project
+	settings - text json, can turn on/off sensors, GPS_polling frequency, heartbeat frequency, etc
+
+api_heartbeat - The API will send heartbeat commands if enabled in api_apps.settings and callback_uri is valid and accepting JSON requests:
+cols: id, api_id, time_sent, time_rcvd, latency, data
+	id - int, ai
+	api_id - o2m SK api_apps.id
+	time_sent - datetime, the unix timestamp the server sends the heartbeat ping (preferably kept in check with GPS or other high accuraacy RTC)
+	time_rcvd - datetime, the unix timestamp the server receives the response
+	latency - long, the number of ms between time_sent and time_rcvd
+	data - text json, data that the API sends to the device. This can be used to apply settings immedietly or trigger events in the device
