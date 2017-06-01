@@ -28,3 +28,4 @@ cols: id, api_id, time_sent, time_rcvd, latency, data
 	time_rcvd - datetime, the unix timestamp the server receives the response
 	latency - long, the number of ms between time_sent and time_rcvd
 	data - text json, data that the API sends to the device. This can be used to apply settings immedietly or trigger events in the device
+	enabled - Bool, whether or not it should send the heartbeat
