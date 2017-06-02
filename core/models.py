@@ -12,7 +12,7 @@ class api_owners(models.Model):
 	# Users who are allowed to have an API app
 	user = models.OneToOneField(User, unique=True, blank=False)
 	date_added = models.DateField(blank=False)
-	date_deactivated = models.DateField()
+	date_deactivated = models.DateField(blank=True)
 	active = models.BooleanField(blank=False)
 
 	def __str__(self):
