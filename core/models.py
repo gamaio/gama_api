@@ -26,9 +26,9 @@ class api_apps(models.Model):
 	apikey = models.CharField(max_length=256, unique=True, blank=False)
 	name = models.CharField(max_length=512, unique=True, blank=False)
 	description = models.CharField(max_length=2048)
-	website = models.URLField(max_length=3000)
-	callback_uri = models.URLField(max_length=3000)
-	settings = JSONField()
+	website = models.URLField(max_length=3000, blank=True)
+	callback_uri = models.URLField(max_length=3000, blank=True)
+	settings = JSONField(blank=True)
 
 	def __str__(self):
 		return '%s (%s) - %s' % (self.name, self.owner.name, self.apikey)
@@ -45,7 +45,7 @@ class api_heartbeat(models.Model):
 	time_sent = models.DateTimeField(blank=False)
 	time_rcvd = models.DateTimeField(blank=False)
 	latency = models.FloatField(blank=False)
-	data = JSONField()
+	data = JSONField(blank=True)
 
 	def __str__(self):
 		return '%s (%s ms)' % (self.api.name, self.latency)
