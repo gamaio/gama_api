@@ -16,7 +16,7 @@ class api_owners(models.Model):
 	active = models.BooleanField(blank=False)
 
 	def __str__(self):
-		return '%s (%s)' % (self.user.username, self.user.id)
+		return '%s (%s)' % (self.user.username, self.active)
 
 
 @python_2_unicode_compatible
