@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils import timezone
+import datetime
 
 
 @python_2_unicode_compatible
@@ -50,4 +52,6 @@ class api_heartbeat(models.Model):
 	data = JSONField(blank=True)
 
 	def __str__(self):
-		return '%s (%s ms)' % (self.api.name, self.latency)
+		sent_time = datetime.datetime.strftime(self.time_sent, '%m/%d/%y %H:%M:%S')
+		rcvd_time = datetime.datetime.strftime(self.time_rcvd, '%m/%d/%y %H:%M:%S')
+		return '%s (%s:%s - %s ms)' % (self.api.name, sent_time, rcvd_time, self.latency)
