@@ -31,7 +31,9 @@ class api_apps(models.Model):
 	settings = JSONField(blank=True)
 
 	def __str__(self):
-		return '%s (%s) - %s' % (self.name, self.owner.name, self.apikey)
+		# Truncate the api key to the first 15 characters for identification
+		thekey = self.apikey[:15] + (self.apikey[:15] and '...')
+		return '%s (%s) - %s' % (self.name, self.owner.user.username, thekey)
 
 
 @python_2_unicode_compatible
