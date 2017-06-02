@@ -55,3 +55,7 @@ class api_heartbeat(models.Model):
 		sent_time = datetime.datetime.strftime(self.time_sent, '%m/%d/%y %H:%M:%S')
 		rcvd_time = datetime.datetime.strftime(self.time_rcvd, '%m/%d/%y %H:%M:%S')
 		return '%s (%s:%s - %s ms)' % (self.api.name, sent_time, rcvd_time, self.latency)
+
+	def determine_latency(self):
+		self.latency = (self.time_rcvd - self.time_sent).microseconds / 1000
+		return self
